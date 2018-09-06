@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2CB2A317213F256400ACD815 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A316213F256400ACD815 /* main.cpp */; };
+		2CB2A31F213F262200ACD815 /* chip8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A31D213F262200ACD815 /* chip8.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		2CB2A313213F256400ACD815 /* Chip8emu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8emu; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB2A316213F256400ACD815 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2CB2A31D213F262200ACD815 /* chip8.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = chip8.cpp; sourceTree = "<group>"; };
+		2CB2A31E213F262200ACD815 /* chip8.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = chip8.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				2CB2A316213F256400ACD815 /* main.cpp */,
+				2CB2A31D213F262200ACD815 /* chip8.cpp */,
+				2CB2A31E213F262200ACD815 /* chip8.hpp */,
 			);
 			path = Chip8emu;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB2A31F213F262200ACD815 /* chip8.cpp in Sources */,
 				2CB2A317213F256400ACD815 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
