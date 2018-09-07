@@ -7,15 +7,18 @@
 //
 
 #include <iostream>
-#include   // OpenGL graphics and input
+#include <GLUT/GLUT.h> // OpenGL graphics and input
 #include "chip8.hpp" // Your cpu core implementation
 
 // class to handle opcodes
 Chip8 myChip8;
+void setupGraphics();
+void setupInput();
+void drawGraphics();
 
 int main(int argc, const char * argv[])
 {
-    // Set up render system (window size, display mode, etc)
+    // Set up render system (window size, display mode, etc) -- GLUT
     setupGraphics();
     // register input callbacks (bind callbacks)
     setupInput();
@@ -38,7 +41,7 @@ int main(int argc, const char * argv[])
          * 0xDXYN - draws sprite on screen
          */
         if(myChip8.drawFlag)
-            drawGraphics()
+            drawGraphics();
             
         // Store key press state (press and release) in part that emulates keypad
         myChip8.setKeys();
@@ -46,3 +49,14 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
+void setupGraphics()
+{
+}
+
+void setupInput()
+{
+}
+
+void drawGraphics()
+{
+}

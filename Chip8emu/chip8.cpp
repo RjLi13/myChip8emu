@@ -11,32 +11,58 @@
 void Chip8::initialize()
 {
     // Initialize registers and memory once
+    
     pc = 0x200; // program counter starts at 0x200
     opcode = 0; // reset curr opcode
     I = 0; // reset index register
     sp = 0; // reset stack pointer
     
     // Clear display
-    // Clear stack
-    // Clear registers V0-VF
-    // Clear memory
+    for(int i = 0; i < 64*32; ++i)
+        gfx[i] = 0;
+    
+    for(int i = 0; i < 16; ++i)
+    {
+        stack[i] = 0;    // Clear stack
+        V[i] = 0; // Clear registers V0-VF
+    }
+    
+    // Clear memory (start at 80, since later will load fontset)
+    for(int i =  80; i < 4096; ++i)
+        memory[i] = 0;
     
     // Load fontset
     // This fontset should be loaded in memory location 0x50 == 80
     for(int i = 0; i < 80; ++i)
-    {
         memory[i] = chip8_fontset[i];
-    }
     
     // Reset Timers
+    delay_timer = 0;
+    sound_timer = 0;
 }
 
-void Chip8::loadGame(<#std::string#> prog)
+void Chip8::loadGame(const char * filename)
 {
     /*
      load the program into the memory (use fopen in binary mode) and start filling the memory at
      location: 0x200 == 512.
      */
+    unsigned int bufferSize = 4096 - 512; // because chip8 progs use 0x200 to 0xFFF
+    unsigned char buffer[bufferSize];
+    FILE *pfile = fopen(filename, "rb");
+    if(!pfile)
+    {
+        std::cout << "Could not open file " << filename;
+        return;
+    }
+    size_t bytesRead = fread(buffer, sizeof(char), bufferSize, pfile);
+    if(bytesRead == 0)
+    {
+        std::cout << "Problem reading file";
+        return;
+    }
+    fclose(pfile);
+    
     for(int i = 0; i < bufferSize; ++i)
         memory[i+512] = buffer[i];
 }
@@ -100,4 +126,8 @@ void Chip8::emulateCycle()
             printf("BEEP!\n");
         --sound_timer;
     }
+}
+
+void Chip8::setKeys()
+{
 }
