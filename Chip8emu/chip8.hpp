@@ -14,6 +14,7 @@
 
 class Chip8
 {
+    void clearScreen();
 public:
     bool drawFlag;
     void initialize();

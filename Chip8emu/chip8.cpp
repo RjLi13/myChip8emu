@@ -17,9 +17,7 @@ void Chip8::initialize()
     I = 0; // reset index register
     sp = 0; // reset stack pointer
     
-    // Clear display
-    for(int i = 0; i < 64*32; ++i)
-        gfx[i] = 0;
+    clearScreen();
     
     for(int i = 0; i < 16; ++i)
     {
@@ -94,14 +92,116 @@ void Chip8::emulateCycle()
              */
             pc += 2;
             break;
+        
+        case 0x1000: // 1NNN: jumps to address NNN
+            pc = opcode & 0x0FFF;
+            break;
             
-        case 0x0000:
+        case 0x2000: // 2NNN: Calls subroutine at NNN
+            stack[sp] = pc; // store current address
+            ++sp; // increase sp to avoid overwriting stack
+            pc = opcode & 0x0FFF; // set pc to NNN (jump)
+            break;
+        
+        case 0x3000: // 3XNN: Skips the next instruction if VX equals NN.
+            // shift by 8 to get X (shift is bits, hex is nibble)
+            if ( V[(opcode & 0x0F00) >> 8] == (opcode & 0x00FF) )
+                pc += 2; // skips
+            
+            pc += 2;
+            break;
+            
+        case 0x4000: // Skips next instruction if VX not equals NN
+            if ( V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF))
+                pc += 2; // skips
+            
+            pc += 2;
+            break;
+            
+        case 0x5000: // Skips the next instruction if VX equals VY.
+            if ( (opcode & 0x000F) != 0)
+                goto UNKNOWNOP;
+            
+            if ( V[(opcode & 0x0F00) >> 8] == V[(opcode & 0x00F0) >> 4])
+                pc += 2;
+            
+            pc += 2;
+            break;
+        
+        case 0x6000: // Sets VX to NN.
+            V[(opcode & 0x0F00) >> 8] = (opcode & 0x00FF);
+            pc += 2;
+            break;
+            
+        case 0x7000: //Adds NN to VX
+            V[(opcode & 0x0F00) >> 8] += (opcode & 0x00FF);
+            pc += 2;
+            break;
+            
+        case 0x8000:
             switch(opcode & 0x000F)
             {
-                case 0x0000: // 0x00E0: Clears screen
+                case 0x0000: // 8XY0
+                    V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
+                    break;
+                
+                case 0x0001: // 8XY1
+                    V[(opcode & 0x0F00) >> 8] |= V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
                     break;
                     
-                case 0x000E: //0x00EE: Returns from subroutine
+                case 0x0002: // 8XY2
+                    V[(opcode & 0x0F00) >> 8] &= V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
+                    break;
+                    
+                case 0x0003: // 8XY3
+                    V[(opcode & 0x0F00) >> 8] ^= V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
+                    break;
+                
+                case 0x0004: // 8XY4
+                    // solve case of carry (if sum is greater than FF)
+                    if ( V[(opcode & 0x0F00) >> 8] > (0xFF - V[opcode & 0x00F0]) )
+                        V[0xF] = 1;
+                    else
+                        V[0xF] = 0;
+                    
+                    V[(opcode & 0x0F00) >> 8] += V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
+                    break;
+                    
+                case 0x0005: // 8XY5
+                    if ( V[(opcode & 0x0F00) >> 8] > V[(opcode & 0x00F0) >> 4])
+                        V[0xF] = 1;
+                    else
+                        V[0xF] = 0;
+                    
+                    V[(opcode & 0x0F00) >> 8] -= V[(opcode & 0x00F0) >> 4];
+                    pc += 2;
+                    break;
+                    
+                case 0x0006: // 8XY6
+                    V[0xF] = (V[(opcode & 0x0F00) >> 8] & 0x0F);
+                    V[(opcode & 0x0F00) >> 8] >>= 1;
+                    pc += 2;
+                    break;
+                    
+                case 0x0007: // 8XY7
+                    if ( V[(opcode & 0x0F00) >> 8] < V[(opcode & 0x00F0) >> 4])
+                        V[0xF] = 1;
+                    else
+                        V[0xF] = 0;
+                    
+                    V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x00F0) >> 4] - V[(opcode & 0x0F00) >> 8];
+                    pc += 2;
+                    break;
+                    
+                case 0x000E: // 8XYE
+                    V[0xF] = (V[(opcode & 0x0F00) >> 8] & 0xF0) >> 4;
+                    V[(opcode & 0x0F00) >> 8] <<= 1;
+                    pc += 2;
                     break;
                     
                 default:
@@ -109,6 +209,33 @@ void Chip8::emulateCycle()
             }
             break;
             
+        case 0x9000:
+            
+            
+        case 0x0000:
+            switch(opcode & 0x000F)
+            {
+                case 0x0000: // 0x00E0: Clears screen
+                    if ( (opcode & 0x00F0) != 0x00E0)
+                        goto UNKNOWNZERO;
+                        
+                    clearScreen();
+                    pc += 2;
+                    break;
+                    
+                case 0x000E: //0x00EE: Returns from subroutine
+                    --sp; // go to past stack level
+                    pc = stack[sp];
+                    pc += 2;
+                    break;
+                
+                UNKNOWNZERO:
+                default:
+                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+            }
+            break;
+            
+        UNKNOWNOP:
         default:
             printf ("Unknown opcode: 0x%X\n", opcode);
     }
@@ -130,4 +257,11 @@ void Chip8::emulateCycle()
 
 void Chip8::setKeys()
 {
+}
+
+void Chip8::clearScreen()
+{
+    // Clear display
+    for(int i = 0; i < 64*32; ++i)
+        gfx[i] = 0;
 }
