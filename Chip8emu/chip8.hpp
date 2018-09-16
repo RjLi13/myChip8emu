@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <random>
 
 class Chip8
 {

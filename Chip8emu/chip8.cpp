@@ -210,7 +210,164 @@ void Chip8::emulateCycle()
             break;
             
         case 0x9000:
+            if ( (opcode & 0x000F) != 0)
+                goto UNKNOWNOP;
             
+            if ( V[(opcode & 0x0F00) >> 8] != V[(opcode & 0x00F0) >> 4])
+                pc += 2;
+            
+            pc += 2;
+            break;
+
+        case 0xB000:
+            pc = V[0] + (opcode & 0x0FFF);
+            break;
+            
+        case 0xC000:
+        {
+            std::default_random_engine generator;
+            std::uniform_int_distribution<int> distribution(0,255); // [0,255]
+            V[(opcode & 0x0F00) >> 8] = distribution(generator) & (opcode & 0x00FF);
+            pc += 2;
+            break;
+        }
+            
+        case 0xD000:
+        {
+            /*
+             Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn’t change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn’t happen
+             */
+            // 1 pixel = 1 bit
+            // The state of each pixel is set by using a bitwise XOR operation
+            // This means that it will compare the current pixel state with the current value in the memory. If the current value is different from the value in the memory, the bit value will be 1. If both values match, the bit value will be 0.
+            unsigned short x = V[(opcode & 0x0F00) >> 8];
+            unsigned short y = V[(opcode & 0x00F0) >> 4];
+            unsigned short height = opcode & 0x000F;
+            unsigned short pixel;
+            V[0xF] = 0;
+            
+            // loop over each row
+            for (int yline = 0; yline < height; ++yline)
+            {
+                // fetch pixel value from memory starting at I
+                pixel = memory[I + yline];
+                // loop over 8 pixels
+                for (int xline = 0; xline < 8; ++xline)
+                {
+                    // check if current evaluated pixel is set to 1 (0x80 >> xline scans through byte 1 bit at a time)
+                    if ( (pixel & (0x80 >> xline)) != 0)
+                    {
+                        // check if pixel on display is set to 1
+                        if (gfx[x + xline + ( (y + yline) * 64)] == 1)
+                            V[0xF] = 1; // collision
+                        
+                        //set pixel value
+                        gfx[x + xline + ((y + yline) * 64)] ^= 1;
+                    }
+                }
+            }
+            drawFlag = true;
+            pc += 2;
+            break;
+        }
+            
+        case 0xE000:
+            switch(opcode & 0x00FF)
+            {
+                case 0x009E: // EX9E
+                    if (key[V[(opcode & 0x0F00) >> 8]] != 0)
+                        pc += 2;
+                        
+                    pc += 2;
+                    break;
+                
+                case 0x00A1:
+                    if (key[V[(opcode & 0x0F00) >> 8]] == 0)
+                        pc += 2;
+                    
+                    pc += 2;
+                    break;
+                    
+                default:
+                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+            }
+            
+        case 0xF000:
+            switch(opcode & 0x00FF)
+            {
+                case 0x0007:
+                    V[(opcode & 0x0F00) >> 8] = delay_timer;
+                    pc += 2;
+                    break;
+                    
+                case 0x000A:
+                    // blocking
+                    while(1)
+                    {
+                        for (int i = 0; i < 0xF; ++i)
+                        {
+                            if (key[i] == 1)
+                            {
+                                V[(opcode & 0x0F00) >> 8] = i;
+                                goto OUT;
+                            }
+                        }
+                    }
+                OUT:
+                    pc += 2;
+                    break;
+                    
+                case 0x0015:
+                    delay_timer = V[(opcode & 0x0F00) >> 8];
+                    pc += 2;
+                    break;
+                    
+                case 0x0018:
+                    sound_timer = V[(opcode & 0x0F00) >> 8];
+                    pc += 2;
+                    break;
+                    
+                case 0x001E:
+                    I += V[(opcode & 0x0F00) >> 8];
+                    pc += 2;
+                    break;
+                    
+                case 0x0029:
+                    // ???
+                    I = chip8_fontset[V[(opcode & 0x0F00) >> 8]];
+                    pc += 2;
+                    break;
+                    
+                case 0x0033:
+                    // take the decimal representation of VX, place the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.)
+                    memory[I]     = V[(opcode & 0x0F00) >> 8] / 100;
+                    memory[I + 1] = (V[(opcode & 0x0F00) >> 8] / 10) % 10;
+                    memory[I + 2] = (V[(opcode & 0x0F00) >> 8] % 100) % 10;
+                    pc += 2;
+                    break;
+                    
+                case 0x0055:
+                {
+                    int j = I;
+                    for (int i = 0; i <= (opcode & 0x0F00) >> 8; ++i)
+                        memory[j++] = V[i];
+                    
+                    pc += 2;
+                    break;
+                }
+                    
+                case 0x0065:
+                {
+                    int j = I;
+                    for (int i = 0; i <= (opcode & 0x0F00) >> 8; ++i)
+                        V[i] = memory[j++];
+                    
+                    pc += 2;
+                    break;
+                }
+                default:
+                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+            }
             
         case 0x0000:
             switch(opcode & 0x000F)
