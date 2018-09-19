@@ -17,7 +17,9 @@ void Chip8::initialize()
     I = 0; // reset index register
     sp = 0; // reset stack pointer
     
-    clearScreen();
+    // Clear display
+    for(int i = 0; i < 64*32; ++i)
+        gfx[i] = 0;
     
     for(int i = 0; i < 16; ++i)
     {
@@ -376,7 +378,10 @@ void Chip8::emulateCycle()
                     if ( (opcode & 0x00F0) != 0x00E0)
                         goto UNKNOWNZERO;
                         
-                    clearScreen();
+                    // Clear display
+                    for(int i = 0; i < 64*32; ++i)
+                        gfx[i] = 0;
+                    
                     pc += 2;
                     break;
                     
@@ -412,13 +417,3 @@ void Chip8::emulateCycle()
     }
 }
 
-void Chip8::setKeys()
-{
-}
-
-void Chip8::clearScreen()
-{
-    // Clear display
-    for(int i = 0; i < 64*32; ++i)
-        gfx[i] = 0;
-}

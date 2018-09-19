@@ -7,11 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C7F68DE2150301C000F548C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F68DD2150301C000F548C /* main.cpp */; };
+		2C7F68E721503991000F548C /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7F68E621503991000F548C /* gtest.framework */; };
 		2CB2A317213F256400ACD815 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A316213F256400ACD815 /* main.cpp */; };
 		2CB2A31F213F262200ACD815 /* chip8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A31D213F262200ACD815 /* chip8.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2C7F68D92150301C000F548C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		2CB2A311213F256400ACD815 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -24,6 +35,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C7F68DB2150301C000F548C /* Chip8Tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8Tests; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C7F68DD2150301C000F548C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2C7F68E621503991000F548C /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = googletests/Build/Products/Debug/gtest.framework; sourceTree = "<group>"; };
 		2CB2A313213F256400ACD815 /* Chip8emu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8emu; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB2A316213F256400ACD815 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2CB2A31D213F262200ACD815 /* chip8.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = chip8.cpp; sourceTree = "<group>"; };
@@ -31,6 +45,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2C7F68D82150301C000F548C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C7F68E721503991000F548C /* gtest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2CB2A310213F256400ACD815 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -41,11 +63,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C7F68DC2150301C000F548C /* Chip8Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2C7F68DD2150301C000F548C /* main.cpp */,
+			);
+			path = Chip8Tests;
+			sourceTree = "<group>";
+		};
+		2C7F68E221503139000F548C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C7F68E621503991000F548C /* gtest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		2CB2A30A213F256400ACD815 = {
 			isa = PBXGroup;
 			children = (
 				2CB2A315213F256400ACD815 /* Chip8emu */,
+				2C7F68DC2150301C000F548C /* Chip8Tests */,
 				2CB2A314213F256400ACD815 /* Products */,
+				2C7F68E221503139000F548C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				2CB2A313213F256400ACD815 /* Chip8emu */,
+				2C7F68DB2150301C000F548C /* Chip8Tests */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +111,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2C7F68DA2150301C000F548C /* Chip8Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C7F68E12150301C000F548C /* Build configuration list for PBXNativeTarget "Chip8Tests" */;
+			buildPhases = (
+				2C7F68D72150301C000F548C /* Sources */,
+				2C7F68D82150301C000F548C /* Frameworks */,
+				2C7F68D92150301C000F548C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chip8Tests;
+			productName = Chip8Tests;
+			productReference = 2C7F68DB2150301C000F548C /* Chip8Tests */;
+			productType = "com.apple.product-type.tool";
+		};
 		2CB2A312213F256400ACD815 /* Chip8emu */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2CB2A31A213F256400ACD815 /* Build configuration list for PBXNativeTarget "Chip8emu" */;
@@ -96,6 +154,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Ruijing;
 				TargetAttributes = {
+					2C7F68DA2150301C000F548C = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					2CB2A312213F256400ACD815 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -114,11 +175,20 @@
 			projectRoot = "";
 			targets = (
 				2CB2A312213F256400ACD815 /* Chip8emu */,
+				2C7F68DA2150301C000F548C /* Chip8Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2C7F68D72150301C000F548C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C7F68DE2150301C000F548C /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2CB2A30F213F256400ACD815 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,6 +201,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		2C7F68DF2150301C000F548C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/googletests/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2C7F68E02150301C000F548C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/googletests/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		2CB2A318213F256400ACD815 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -259,6 +353,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2C7F68E12150301C000F548C /* Build configuration list for PBXNativeTarget "Chip8Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C7F68DF2150301C000F548C /* Debug */,
+				2C7F68E02150301C000F548C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2CB2A30E213F256400ACD815 /* Build configuration list for PBXProject "Chip8emu" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
