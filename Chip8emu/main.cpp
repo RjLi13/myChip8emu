@@ -17,7 +17,7 @@
 // class to handle opcodes
 Chip8 myChip8;
 // modifier is likely to make the resolution actually seeable
-int modifier = 10
+int modifier = 10;
 
 
 // window size
@@ -31,11 +31,11 @@ void keyboardDown(unsigned char, int, int);
 
 // Use new drawing method
 #define DRAWWITHTEXTURE
-typedef unsigned __int8 u8; // __int8 is byte and u8 is alias
+typedef unsigned char u8; // define u8 as unsigned char
 u8 screenData[SCREEN_HEIGHT][SCREEN_WIDTH][3];
 void setupTexture();
 
-int main(int argc, const char * argv[])
+int main(int argc, char * argv[])
 {
     if(argc < 2)
     {

@@ -8,6 +8,16 @@
 
 #include "chip8.hpp"
 
+Chip8::Chip8()
+{
+    initialize();
+}
+
+Chip8::~Chip8()
+{
+    // Don't see an use case for this, so blank for now
+}
+
 void Chip8::initialize()
 {
     // Initialize registers and memory once
@@ -32,7 +42,28 @@ void Chip8::initialize()
         memory[i] = 0;
     
     // Load fontset
+    unsigned char chip8_fontset[80] =
+    {
+        0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+        0x20, 0x60, 0x20, 0x20, 0x70, // 1
+        0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+        0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+        0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+        0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+        0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+        0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+        0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+        0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+        0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+        0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+        0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+        0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+        0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+        0xF0, 0x80, 0xF0, 0x80, 0x80  // F
+    };
     // This fontset should be loaded in memory location 0x50 == 80
+    // there is a reason this starts at mem address 0 (for opcode fx29)
+    // cpu code probably does not have to be in memory either
     for(int i = 0; i < 80; ++i)
         memory[i] = chip8_fontset[i];
     
@@ -41,7 +72,7 @@ void Chip8::initialize()
     sound_timer = 0;
 }
 
-void Chip8::loadGame(const char * filename)
+bool Chip8::loadGame(const char * filename)
 {
     /*
      load the program into the memory (use fopen in binary mode) and start filling the memory at
@@ -53,18 +84,20 @@ void Chip8::loadGame(const char * filename)
     if(!pfile)
     {
         std::cout << "Could not open file " << filename;
-        return;
+        return 1;
     }
     size_t bytesRead = fread(buffer, sizeof(char), bufferSize, pfile);
     if(bytesRead == 0)
     {
         std::cout << "Problem reading file";
-        return;
+        return 1;
     }
     fclose(pfile);
     
     for(int i = 0; i < bufferSize; ++i)
         memory[i+512] = buffer[i];
+    
+    return 0;
 }
 
 void Chip8::emulateCycle()
@@ -334,9 +367,10 @@ void Chip8::emulateCycle()
                     pc += 2;
                     break;
                     
-                case 0x0029:
-                    // ???
-                    I = chip8_fontset[V[(opcode & 0x0F00) >> 8]];
+                case 0x0029: // FX29: Sets I to the location of the sprite for the character in VX. Characters 0-F (in hexadecimal) are represented by a 4x5 font
+                    I = V[(opcode & 0x0F00) >> 8] * 0x5; // Multiply by 5 because in memory array
+                                                        // each digit font spans 5 and has location 5*digit
+                                                        // see load fontset in initialize
                     pc += 2;
                     break;
                     
