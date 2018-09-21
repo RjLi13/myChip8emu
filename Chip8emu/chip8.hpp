@@ -15,6 +15,9 @@
 
 class Chip8
 {
+public: // Yes, technically these member variables should be private, and I should have getter functions for them
+    // but for the purposes of testing, it's easier to make the member variables public.
+    
     // The Chip 8 has 35 opcodes which are all two bytes long.
     unsigned short opcode;
     // Index register I with value from 0x000 to 0xFFF
@@ -45,7 +48,7 @@ class Chip8
     unsigned char sound_timer;
     
     void initialize();
-public:
+//public:
     Chip8(); // setup everything here
     ~Chip8(); // destructor
     
