@@ -44,8 +44,9 @@ int main(int argc, char * argv[])
     }
     
     // Load game
-    if(!myChip8.loadGame(argv[1]))
+    if(myChip8.loadGame(argv[1]))
         return 1;
+    
     
     // Setup OPENGL
     glutInit(&argc, argv); // sets up program for glut

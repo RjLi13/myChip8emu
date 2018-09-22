@@ -83,13 +83,13 @@ bool Chip8::loadGame(const char * filename)
     FILE *pfile = fopen(filename, "rb");
     if(!pfile)
     {
-        std::cout << "Could not open file " << filename;
+       std::cout << "Could not open file " << filename << std::endl;
         return 1;
     }
     size_t bytesRead = fread(buffer, sizeof(char), bufferSize, pfile);
     if(bytesRead == 0)
     {
-        std::cout << "Problem reading file";
+       std::cout << "Problem reading file" << std::endl;
         return 1;
     }
     fclose(pfile);
@@ -240,7 +240,7 @@ void Chip8::emulateCycle()
                     break;
                     
                 default:
-                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+                    printf ("Unknown opcode for 8 [0x0000]: 0x%X\n", opcode);
             }
             break;
             
@@ -324,8 +324,9 @@ void Chip8::emulateCycle()
                     break;
                     
                 default:
-                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+                    printf ("Unknown opcode for E [0x0000]: 0x%X\n", opcode);
             }
+          break;
             
         case 0xF000:
             switch(opcode & 0x00FF)
@@ -402,8 +403,9 @@ void Chip8::emulateCycle()
                     break;
                 }
                 default:
-                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+                    printf ("Unknown opcode for F [0x0000]: 0x%X\n", opcode);
             }
+          break;
             
         case 0x0000:
             switch(opcode & 0x000F)
@@ -427,13 +429,13 @@ void Chip8::emulateCycle()
                 
                 UNKNOWNZERO:
                 default:
-                    printf ("Unknown opcode [0x0000]: 0x%X\n", opcode);
+                    printf ("Unknown opcode for 0 [0x0000]: 0x%X\n", opcode);
             }
             break;
             
         UNKNOWNOP:
         default:
-            printf ("Unknown opcode: 0x%X\n", opcode);
+            printf ("Unknown opcode for all: 0x%X\n", opcode);
     }
 
 
