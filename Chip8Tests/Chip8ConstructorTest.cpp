@@ -11,8 +11,9 @@
 //
 // Don't forget gtest.h, which declares the testing framework.
 #include <stdio.h>
-#include "gtest/gtest.h"
+//#include "gtest/gtest.h"
 #include "chip8.hpp"
+#include <GoogleMock/GoogleMock.h>
 
 namespace {
     // Step 2. Use the TEST macro to define your tests.
@@ -51,7 +52,8 @@ namespace {
         EXPECT_EQ(myChip8.opcode, 0);
         EXPECT_EQ(myChip8.sp, 0);
         EXPECT_EQ(myChip8.I, 0);
-        
+        unsigned char testarr1[2048] = { };
+        EXPECT_THAT(myChip8.gfx, testing::ElementsAreArray(testarr1, 2048));
 
         
         // <TechnicalDetails>
