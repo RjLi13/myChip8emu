@@ -97,7 +97,6 @@
 		2C509EF7215354FC00390D70 /* Chip8ConstructorTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chip8ConstructorTest.cpp; sourceTree = "<group>"; };
 		2C7F68DB2150301C000F548C /* Chip8Tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8Tests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C7F68DD2150301C000F548C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		2C7F68E621503991000F548C /* gtest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gtest.framework; path = googletests/Build/Products/Debug/gtest.framework; sourceTree = "<group>"; };
 		2CB2A313213F256400ACD815 /* Chip8emu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8emu; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB2A316213F256400ACD815 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2CB2A31D213F262200ACD815 /* chip8.cpp */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.cpp.cpp; path = chip8.cpp; sourceTree = "<group>"; };
@@ -151,7 +150,6 @@
 			children = (
 				2C0E2B24215343EE001D99B5 /* OpenGL.framework */,
 				2C0E2B22215343DA001D99B5 /* GLUT.framework */,
-				2C7F68E621503991000F548C /* gtest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

@@ -39,7 +39,7 @@ int main(int argc, char * argv[])
 {
     if(argc < 2)
     {
-        printf("Usage: myChip8 chip8application\n\n");
+        printf("Usage: ./Chip8emu chip8application\n\n");
         return 1;
     }
     
