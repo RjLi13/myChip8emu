@@ -12,6 +12,7 @@
 		2C1B5B5D2155EEBF0084C7D6 /* gtest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1B5B4D2155ECE40084C7D6 /* gtest.framework */; };
 		2C41A0982154D0370009A275 /* chip8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A31D213F262200ACD815 /* chip8.cpp */; };
 		2C509EF8215354FC00390D70 /* Chip8ConstructorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C509EF7215354FC00390D70 /* Chip8ConstructorTest.cpp */; };
+		2C7D502C2156EF9E0014BFD1 /* Chip8LoadGameTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C7D502B2156EF9E0014BFD1 /* Chip8LoadGameTest.cpp */; };
 		2C7F68DE2150301C000F548C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F68DD2150301C000F548C /* main.cpp */; };
 		2CB2A317213F256400ACD815 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A316213F256400ACD815 /* main.cpp */; };
 		2CB2A31F213F262200ACD815 /* chip8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CB2A31D213F262200ACD815 /* chip8.cpp */; };
@@ -95,6 +96,7 @@
 		2C0E2B24215343EE001D99B5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		2C1B5B412155ECE40084C7D6 /* GoogleMock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GoogleMock.xcodeproj; path = "../../gmock-xcode/GoogleMock.xcodeproj"; sourceTree = "<group>"; };
 		2C509EF7215354FC00390D70 /* Chip8ConstructorTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chip8ConstructorTest.cpp; sourceTree = "<group>"; };
+		2C7D502B2156EF9E0014BFD1 /* Chip8LoadGameTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Chip8LoadGameTest.cpp; sourceTree = "<group>"; };
 		2C7F68DB2150301C000F548C /* Chip8Tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8Tests; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C7F68DD2150301C000F548C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2CB2A313213F256400ACD815 /* Chip8emu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Chip8emu; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 				2C1B5B412155ECE40084C7D6 /* GoogleMock.xcodeproj */,
 				2C7F68DD2150301C000F548C /* main.cpp */,
 				2C509EF7215354FC00390D70 /* Chip8ConstructorTest.cpp */,
+				2C7D502B2156EF9E0014BFD1 /* Chip8LoadGameTest.cpp */,
 			);
 			path = Chip8Tests;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C7D502C2156EF9E0014BFD1 /* Chip8LoadGameTest.cpp in Sources */,
 				2C41A0982154D0370009A275 /* chip8.cpp in Sources */,
 				2C7F68DE2150301C000F548C /* main.cpp in Sources */,
 				2C509EF8215354FC00390D70 /* Chip8ConstructorTest.cpp in Sources */,
